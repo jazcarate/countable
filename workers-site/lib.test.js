@@ -17,4 +17,13 @@ describe('To emoji', () => {
     it('can render negative numbers', () => {
         equal(toEmoji(-7), '👎✋✌️')
     })
+    it('can render exponential numbers', () => {
+        equal(toEmoji("10e7"), '👆👍🖐🤟')
+    })
+    it('can render negative exponential numbers', () => {
+        equal(toEmoji("-10e-7"), '👎👆👍👎🖐👆')
+    })
+    it('can render decimal numbers', () => {
+        equal(toEmoji("2.6"), '✌️👇🖐👆')
+    })
 })

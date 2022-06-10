@@ -9,13 +9,26 @@ const emojis = Object.entries({
 
 function toEmoji(string) {
     let n = count(string)
+    if (shouldExponential(n)) {
+        const { mantissa, exponent } = getNumberParts(n)
+        return toEmojiNumber(mantissa) + "👍" + toEmojiNumber(exponent)
+    }
     return toEmojiNumber(n)
+}
+
+function getNumberParts(x) {
+    var [mantissa, exponent] = x.toExponential().split("e")
+    return { mantissa, exponent }
+}
+
+function shouldExponential(number) {
+    return number.toString().length > number.toExponential().length
 }
 
 function count(string) {
     if (string === "") return Math.floor(Math.random() * 1000);
 
-    let count = parseInt(string)
+    let count = parseFloat(string)
     if (isNaN(count)) return string.length
     return count
 }
@@ -27,6 +40,18 @@ function toEmojiNumber(number) {
         ret += "👎"
         number = -number
     }
+
+    const [integer, fractional] = number.toString().split('.').map(Number)
+
+    ret += toEmojiPositiveInteger(integer)
+    if (fractional)
+        ret += "👇" + toEmojiPositiveInteger(fractional)
+
+    return ret
+}
+
+function toEmojiPositiveInteger(number) {
+    let ret = ""
     let rng = new RNG(number)
     while (number > 0) {
         let sub = emojis.find(([n]) => n <= number)
