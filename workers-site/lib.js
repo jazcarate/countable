@@ -22,7 +22,7 @@ function getNumberParts(x) {
 }
 
 function shouldExponential(number) {
-    return number.toString().length > number.toExponential().length
+    return number.toString().includes("e");
 }
 
 function count(string) {
