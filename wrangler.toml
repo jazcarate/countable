@@ -1,0 +1,4 @@
+name = "countable"
+compatibility_date = "2022-06-10"
+main = "workers-site/index.js"
+site = { bucket = "./public" }
