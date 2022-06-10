@@ -1,6 +1,9 @@
 import { getAssetFromKV, NotFoundError } from '@cloudflare/kv-asset-handler'
 import { toEmoji } from './lib'
 
+
+const DEBUG = true
+
 addEventListener('fetch', event => {
   event.respondWith(
     handleEvent(event)
@@ -8,8 +11,15 @@ addEventListener('fetch', event => {
 })
 
 async function handleEvent(event) {
+  let options = {}
+  if (DEBUG) {
+    options.cacheControl = {
+      bypassCache: true,
+    }
+  }
+
   try {
-    return await getAssetFromKV(event)
+    return await getAssetFromKV(event, options)
   } catch (e) {
     if (!(e instanceof NotFoundError)) throw e
 
