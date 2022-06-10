@@ -40,7 +40,12 @@ class ElementHandler {
 
   element(element) {
     if (element.hasAttribute('data-count')) {
+      element.removeAttribute('data-count')
       element.setInnerContent(this.toReplace)
+    }
+    if (element.hasAttribute('data-count-content')) {
+      element.removeAttribute('data-count-content')
+      element.setAttribute("content", this.toReplace)
     }
   }
 }
